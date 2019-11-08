@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CQ</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+*{
+	box-sizing: border-box;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+}
+html{
+	height:100%;
+	overflow:auto;
+}
+::-webkit-scrollbar {
+    display:none;
+}
+body{
+	height:100%;
+	margin: 0;
+	padding: 0;
+	line-height: 1.42857143;
+	background-color: #f1f3f3;
+}
+#pmain{
+	position: fixed;
+	left:50px;
+	right:0;
+	top:60px;
+	bottom:0;
+	margin: auto;
+	overflow: auto;
+}
+.btn{
+	color:white;
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	border: 1px solid white; 
+    border-radius:0;
+}
+.community-head-btn{
+	border-bottom: 4px solid white;
+}
+</style>
+</head>
+<body>
+<% include usernav1 %>
+<div id="pmain" >
+<div style="position:absolute;width:100%">
+<div style="width:100%;background-image: linear-gradient(to bottom, #4ba2b7, #42a6be, #38aac6, #29adcd, #0fb1d5);padding:6px 0px 0px;display:block;height:50px;">
+<a class="btn community-head-btn" href="/community/communityPanel" style="margin:0px 0px 0px 100px;"><i class="fa fa-users" style="padding:0px;font-size:14px;"></i></a>
+<a class="btn" href="/communityPanel" style="margin:0px 0px 0px 10px;"><i class="fa fa-search" style="padding:0px;font-size:14px;"></i></a>
+</div>
+<div style="background-color:yellow;margin:0 5%;">
+<div style="display:inline-block;width:100%;padding:0px 15px;float:left;">
+<div style="margin-top:50px;margin-bottom:20px;box-shadow: 0 3px 10px 0 rgba(115,143,147,.3);">
+<div style="display:inline-block;background-image: linear-gradient(to bottom, #4ba2b7, #42a6be, #38aac6, #29adcd, #0fb1d5);overflow:visible;width:100%;padding:10px 15px;">
+<p style="color:white;font-weight:bold;margin-top:6px;margin-bottom:10px;">My Communities</p>
+<a href="CreateCommunity" class="btn btn-info community-panel-btn" style="float:right;margin:-35px 5px 0 0;text-decoration:none;">Create</a>
+</div>
+<div style="display:inline-block;width:100%;padding:15px;background-color:white;">
+<% community1.forEach(function(obj){ %>
+<div style="margin:5px 0px 0px;padding:0px 15px;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;">
+<div> 
+<div style="display:inline-block;vertical-align:top;padding:10px;">
+<a href="/community/discussion/<%= obj._id %>"><img src="/image/<%= obj.picId %>" style="width:50px;height:50px;box-shadow: 0 0 10px rgba(0,0,0,0.5);"></a>
+</div>
+<div style="display:inline-block;padding:25px 15px 5px;">
+<a href="/community/discussion/<%= obj._id %>"  style="text-decoration:none;color:#337AB7;font-weight:bold;"><%= obj.name %></a>
+&nbsp;&nbsp;&nbsp;
+<a href="/community/manageCommunity/<%= obj._id %>" style="text-decoration:none;color:#337AB7;">Request(<%= obj.request.length %>)</a>
+</div>
+<div style="display:inline-block;padding:25px 0px 5px;float:right;">
+<a href="/community/manageCommunity/<%= obj._id %>" style="display:inline-block;text-decoration:none;color:white;background-color:#5cb85c;padding:0px 5px;border-radius:2px;"><i class="fa fa-cogs" style="font-size:14px;padding:0px;"></i></a>
+</div>
+</div>
+</div>
+<% }) %>
+<% community2.forEach(function(obj){ %>
+<div style="margin:5px 0px 0px;padding:0px 15px;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;">
+<div> 
+<div style="display:inline-block;vertical-align:top;padding:10px;">
+<a href="/community/discussion/<%= obj._id %>"><img src="/image/<%= obj.picId %>" style="width:50px;height:50px;box-shadow: 0 0 10px rgba(0,0,0,0.5);"></a>
+</div>
+<div style="display:inline-block;padding:25px 15px 5px;">
+<a href="/community/discussion/<%= obj._id %>"  style="text-decoration:none;color:#337AB7;font-weight:bold;"><%= obj.name %></a>
+&nbsp;&nbsp;&nbsp;
+<a href="/community/communitymembers/<%= obj._id %>" style="text-decoration:none;color:#337AB7;">Members(<%= obj.members.length+1 %>)</a>
+</div>
+</div>
+</div>
+<% }) %>
+<% community3.forEach(function(obj){ %>
+<div style="margin:5px 0px 0px;padding:0px 15px;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;">
+<div> 
+<div style="display:inline-block;vertical-align:top;padding:10px;">
+<a href="/community/communityprofile/<%= obj._id %>"><img src="/image/<%= obj.picId %>" style="width:50px;height:50px;box-shadow: 0 0 10px rgba(0,0,0,0.5);"></a>
+</div>
+<div style="display:inline-block;padding:25px 15px 5px;">
+<a href="/community/communityprofile/<%= obj._id %>"  style="text-decoration:none;color:#337AB7;font-weight:bold;"><label class="label label-danger">Pending</label>&nbsp;&nbsp;&nbsp;<%= obj.name %></a>
+&nbsp;&nbsp;&nbsp;
+<a style="text-decoration:none;color:black;cursor:context-menu;">Members(<%= obj.members.length+1 %>)</a>
+</div>
+<div style="display:inline-block;padding:25px 0px 5px;float:right;">
+<a id="<%= obj._id %>" onclick="removeReq(this)" style="display:inline-block;text-decoration:none;color:white;background-color:#d9534f;padding:0px 5px;border-radius:2px;cursor:pointer"><i class="fa fa-times" style="font-size:14px;padding:0px;"></i></a>
+</div>
+</div>
+</div>
+<% }) %>
+<% if(community1.length==0&&community2.length==0&&community3.length==0){ %>
+<div style="margin-top:5px;font-weight: bold;min-height: 20px;padding: 19px;margin-bottom: 20px;background-color: #f5f5f5;border: 1px solid #e3e3e3;border-radius: 4px;">
+<center>No Communities Found</center>
+<br>
+<center><a href="/community/list" style="text-decoration:none;font-weight:500;display:inline-block;padding:6px 12px;background-color:#fff;color:#333;border:1px solid #ccc;">
+Click here for more communities
+</a></center>
+</div>
+<% } %>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script>
+document.getElementsByClassName('anc')[1].classList.add('active');
+document.getElementsByClassName('fa-users')[0].classList.add('act');
+function removeReq(elem)
+{
+    var xhttp=new XMLHttpRequest();
+    xhttp.open('PUT','/removeRequest');
+    xhttp.setRequestHeader('Content-Type','application/json');
+    xhttp.send(JSON.stringify({'id': $(elem).closest('a').attr('id')}));
+    xhttp.onload=function(){
+        location.reload(true);
+    }
+}
+</script>
+</html>

@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<title>
+			CQ
+		</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<style>
+			body
+			{
+				vertical-align:middle;
+				display:flex;
+				justify-content:center;
+				align-items:center;
+				background-color:#F1F3F3;
+			}
+			.row
+			{
+				padding:10px;
+				padding-top:15px;
+				box-shadow:10px 10px 15px grey;
+				background-color:white;
+				border:5px solid gray;
+			}
+		</style>
+	</head>
+	<body class="row">
+	<div class='row col-sm-6 col-xs-12'>
+	<center style="width:100%">
+	<div class="col-sm-12 col-xs-10" >Log Into Your Account</div>
+	<br/>
+	<br/>
+		<form class="form-horizontal" action="/login" method='post' id='login'>
+  <div class="form-group">
+    <div class="col-sm-12 col-xs-12">
+      <input type="text" class="form-control" placeholder="UserName" style="width:20vw" id='username'>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-xs-12"> 
+      <input type="password" class="form-control" placeholder="Enter password" style="width:20vw" id='password'>
+    </div>
+  </div>
+  <div class="form-group"> 
+    <div class="col-sm-12 col-xs-12">
+      <button type="submit" class="btn btn-info">Login</button>
+    </div>
+  </div>
+</form>
+</center>
+	</div>
+	</body>
+	<script>
+		var log=document.getElementById('login');
+		log.addEventListener('submit',function(event){
+			event.preventDefault();
+			var user=document.getElementById('username').value;
+			var pass=document.getElementById('password').value;
+			var obj={
+				username:user,
+				password:pass
+			}
+			var xhr=new XMLHttpRequest();
+			xhr.open('POST','/login');
+			xhr.setRequestHeader('Content-Type','application/json');
+			obj=JSON.stringify(obj);
+			xhr.send(obj);
+			xhr.addEventListener('load',function(){
+			var t=xhr.responseText;
+			if(t=='NO')
+			{
+				alert('User Not Authorised');
+				location.reload();
+			}
+			else
+				location.href=t;
+		});
+		});
+		
+	</script>
+</html>

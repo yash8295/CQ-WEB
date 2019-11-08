@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CQ</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+*{
+	box-sizing: border-box;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+}
+html{
+	height:100%;
+	overflow:auto;
+}
+::-webkit-scrollbar {
+    display:none;
+}
+body{
+	height:100%;
+	margin: 0;
+	padding: 0;
+	line-height: 1.42857143;
+	background-color: #f1f3f3;
+}
+#pmain{
+	position: fixed;
+	left:50px;
+	right:0;
+	top:60px;
+	bottom:0;
+	margin: auto;
+	overflow: auto;
+}
+.btn{
+	color:white;
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	border: 1px solid white; 
+}
+.community-head-btn{
+	border-bottom: 4px solid white;
+}
+.pendReq{
+	float:right;
+	color:#fff;
+	background-color:transparent;
+	border-color:#2e6da4;
+	padding:6px 12px;
+	border:1px solid;
+	cursor:not-allowed;
+	opacity:0.65;
+	outline:none;
+}
+.pendReq:hover{
+	color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+.dropDown{
+	position:relative;
+}
+.dDown{
+	display:inline-block;
+	float:right;
+	background-color:#fff;
+	padding:6px 12px;
+	border:2px solid #d1cfcf;
+	cursor:pointer;
+}
+.dCon{
+    z-index:2;
+	position: absolute;
+	top:46px;
+	right:15px;
+	float:left;
+	display:none;
+	white-space:nowrap;
+	overflow:hidden;
+	background-color:#fff;
+	padding:5px 0;border: 2px solid rgba(119, 159, 255, 0.56);
+}
+.dropDown:hover .dCon{
+	display:inline-block;
+}	
+</style>
+</head>
+<body>
+<% include usernav1 %>
+<input id="CinName" value="<%= community[0]._id %>" style="display:none;"> 
+<div id="pmain" >
+<div style="position:absolute;width:100%">
+<div style="width:100%;background-image: linear-gradient(to bottom, #4ba2b7, #42a6be, #38aac6, #29adcd, #0fb1d5);padding:6px 0px 0px;display:block;height:50px;">
+<div class="container">
+<% if(role==""){ %>
+	<% if(community[0].membershipRule=='Direct'){ %>
+		<button onclick="djoin(this)" style="float:right;color:#fff;background-color:transparent;border-color:#2e6da4;padding:6px 12px;border:1px solid;">Join <i class="fa fa-plus" style="font-size:16px;font-weight:300;padding:0;"></i></button>
+	<% }else{ %>
+		<button onclick="ajoin(this)" style="float:right;color:#fff;background-color:transparent;border-color:#2e6da4;padding:6px 12px;border:1px solid;">Ask To Join</button>
+	<% } %>
+<% }else if(role=="pending"){ %>
+	<button class="pendReq">Requested</button>
+<% } %>
+</div>
+</div>
+<div class="container">
+<div style="display:inline-block;padding-left:15px;float:left;">
+<a href="/community/discussion/<%= community[0]._id %>">
+<img src="/image/<%= community[0].picId %>" style="width:100px;height:100px;box-shadow: 0 0 10px rgba(0,0,0,0.5);margin-top:-40px;border:4px solid #fff;">
+</a>
+</div>
+<div style="display:inline-block;margin:15px 0 0;padding:0 15px;color:#337AB7;height:60px;font-size:20px;float:left;font-weight:600;">
+<%= community[0].name %>
+</div>
+<% if(role=="member"||role=="owner"){ %>
+	<div class="dropDown" style="display:inline-block;padding:10px 15px 0;float:right;">
+	<div class="dDown">
+	<i class="fa fa-bars" style="padding:0;font-size:16px;"></i>
+	</div>
+	<div class="dCon">
+	<a href="/community/discussion/<%= community[0]._id %>" style="display:inline-block;padding:3px 20px;text-decoration:none;color:#333333;">Discussion</a><br>
+	<% if(role=="owner"){ %>
+		<a href="/community/managecommunity/<%= community[0]._id %>" style="display:inline-block;padding:3px 20px;text-decoration:none;color:#333333;">Manage Community</a><br>
+	<% } %>
+	<a href="/community/communityprofile/<%= community[0]._id %>" style="display:inline-block;padding:3px 20px;text-decoration:none;color:#333333;">Community Profile</a><br>
+	<a href="/community/communitymembers/<%= community[0]._id %>" style="display:inline-block;padding:3px 20px;text-decoration:none;color:#333333;">Community Members</a><br>
+	</div>
+	</div>
+<% } %>
+</div>
+<center>
+    <hr style="border-top:2px solid #E6E6E6;width:85%;margin-top:0">
+</center>
+<div class="container" style="width:94%;">
+<div class="col-sm-3 col-xs-12">
+<div style="border:1px solid #dfdfdf;margin-bottom:20px;">
+<div style="padding:10px 15px;color:#333;background-color:#f5f5f5;">	
+    Members<a href="/community/communitymembers/<%= community[0]._id %>" style="float:right;">View all</a>
+</div>
+<div style="padding:15px;background:rgb(255, 255, 255);overflow-x:scroll;white-space:nowrap;text-align:center;">
+<% if(role==""){ %>
+	<% if(community[0].membershipRule=='Direct'){ %>
+		<button onclick="djoin(this)" style="color:#fff;background-color:#337ab7;border-color:#2e6da4;padding:6px 12px;border:1px solid;">Join <i class="fa fa-plus" style="font-size:16px;font-weight:300;padding:0;"></i></button>
+	<% }else{ %>
+		<button onclick="ajoin(this)" style="color:#fff;background-color:#337ab7;border-color:#2e6da4;padding:6px 12px;border:1px solid;">Ask To Join</button>
+	<% } %>
+<% }else if(role=="pending"){ %>
+	<button style="color:#fff;background-color:#337ab7;border-color:#2e6da4;padding:6px 12px;border:1px solid;opacity:0.65;cursor:not-allowed;outline:none;">Requested</button>
+<% }else{ %>
+	<a href="/viewprofile/<%= community[0].owner.UID %>"><img src="/image/<%= community[0].owner.picID %>" style="height:40px;width:40px;border-radius:50%;"></a>
+	<% for(var i=0;i<community[0].members.length;++i){ %>
+	<a href="/viewprofile/<%= community[0].members[i].UID %>"><img src="/image/<%= community[0].members[i].picID %>" style="height:40px;width:40px;border-radius:50%;"></a>
+	<% } %>
+    <% for(var i=0;i<community[0].admin.length;++i){ %>
+	<a href="/viewprofile/<%= community[0].admin[i].UID %>"><img src="/image/<%= community[0].admin[i].picID %>" style="height:40px;width:40px;border-radius:50%;"></a>
+	<% } %>
+<% } %>
+</div>
+<% if(role==""||role=="pending"){ %>
+<div style="padding:10px 15px;background-color:#f5f5f5;text-align:center;">
+<%= community[0].members.length+1+community[0].admin.length %> Members
+</div>
+<% }else{ %>
+    <div style="padding:10px 15px;background-color:#f5f5f5;">
+        <a href="/community/communitymembers/<%= community[0]._id %>"><%= community[0].members.length+1+community[0].admin.length %> Members</a>
+        <% if(role=="member"){ %>
+            <a style="float:right;">Leave Community</a>
+        <% } %>
+    </div>
+<% } %>
+</div>
+<div style="border:1px solid #dfdfdf;margin-bottom:20px;background:rgb(255, 255, 255);">
+<div style="padding:10px 15px;color:#333;background-color:#f5f5f5;">	
+Community Managers
+</div>
+<div style="padding:15px;background:rgb(255, 255, 255);overflow-x:scroll;white-space:nowrap;width:100%">
+<div style="height:65px;">
+<a href="/viewprofile/<%= community[0].owner.UID %>" style="padding:0px 15px;float:left;"><img src="/image/<%= community[0].owner.picID %>" style="height:50px;width:50px;border:2px solid #fff;border-radius:50%;"></a>
+<div style="display:inline-block;float:left;margin-top:10px;">
+<span class="label label-success">Owner</span><br>
+<a href="/viewprofile/<%= community[0].owner.UID %>" style="text-decoration:none;"><%= community[0].owner.name %></a>
+</div>
+</div>
+<% for(var i=0;i<community[0].admin.length;++i){ %>
+<div style="height:65px;">
+<a href="/viewprofile/<%= community[0].admin[i].UID %>" style="padding:0px 15px;float:left;"><img src="/image/<%= community[0].admin[i].UID %>" style="height:50px;width:50px;border:2px solid #fff;border-radius:50%;"></a>
+<div style="display:inline-block;float:left;margin-top:10px;">
+<span class="label label-warning">Admin</span><br>
+<a href="/viewprofile/<%= community[0].admin[i].UID %>" style="text-decoration:none;"><%= community[0].admin[i].name %></a>
+</div>
+</div>
+<% } %>
+</div>
+</div>
+</div>
+<div class="col-sm-8 col-xs-12" style="padding:0px 10px 10px;border-left:1px solid #bebebe;">
+<div style="border:1px solid #dfdfdf;margin-bottom:20px;">
+<div style="padding:10px 15px;color:#333;background-color:#f5f5f5;text-align:center;">	
+About Community
+</div>
+<div style="padding:15px;background:rgb(255, 255, 255);">
+<p align="center"><%= community[0].description %></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script>
+document.getElementsByClassName('anc')[1].classList.add('active');
+document.getElementsByClassName('fa-users')[0].classList.add('act');
+function djoin(elem)
+{
+	var name=document.getElementById('CinName').value;
+	var xhttp=new XMLHttpRequest();
+	xhttp.open('PUT','/directJoin');
+ 	xhttp.setRequestHeader('Content-Type','application/json');
+	xhttp.send(JSON.stringify({'cname':name}));
+	xhttp.onload=function(){
+		location.reload(true);
+	}
+}
+function ajoin(elem)
+{
+	var name=document.getElementById('CinName').value;
+	var xhttp=new XMLHttpRequest();
+	xhttp.open('PUT','/indirectJoin');
+ 	xhttp.setRequestHeader('Content-Type','application/json');
+	xhttp.send(JSON.stringify({'cname':name}));
+	xhttp.onload=function(){
+		location.reload(true);
+	}
+}
+</script>
+</html>
