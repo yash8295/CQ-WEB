@@ -1,10 +1,11 @@
-CQ WEB
+##CQ WEB
+ A place for discussion
 
 
 Features
 Open Source
 Layout Defined
 
-How To Use?
-
-Instructions
+###Requirements(Pre installs Required)
+Node js
+Web Browser
