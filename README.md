@@ -1,11 +1,11 @@
-##CQ WEB
- A place for discussion
+## CQ WEB
+A place for discussion
 
 
-Features
+### Features
 Open Source
 Layout Defined
 
-###Requirements(Pre installs Required)
+### Requirements(Pre installs Required)
 Node js
 Web Browser
